@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FleetFlux - Presentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: '#FF8C00',
+                        'brand-dark': '#FF6600',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .slide {
+            display: none;
+            height: 100vh;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        /* Active slide fills viewport and scrolls internally */
+        .slide.active {
+            display: block;
+            height: 100vh;
+            overflow: auto;
+            -ms-overflow-style: none; /* IE 10+ */
+            scrollbar-width: none; /* Firefox */
+        }
+
+        /* Hide webkit scrollbars but keep scrolling functional */
+        .slide.active::-webkit-scrollbar {
+            display: none;
+            width: 0;
+            height: 0;
+        }
+
+        /* Ensure the immediate slide content stretches to the slide height
+           so its background covers the full viewport (prevents white band) */
+        .slide > div {
+            min-height: 100%;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .code-block {
+            background: #1e293b;
+            border-left: 4px solid #FF8C00;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .architecture-box {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .architecture-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .feature-card {
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: scale(1.05);
+        }
+        
+        .nav-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background: linear-gradient(90deg, #FF8C00, #FF6600);
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100">
+    
+    <!-- Progress Bar -->
+    <div class="fixed top-0 left-0 right-0 z-50">
+        <div class="progress-bar" id="progressBar" style="width: 7.69%"></div>
+    </div>
+    
+    <!-- Navigation Buttons -->
+    <div class="fixed bottom-8 right-8 z-50 flex gap-4">
+        <button id="prevBtn" onclick="previousSlide()" class="nav-btn bg-brand hover:bg-brand-dark text-white px-6 py-3 rounded-lg shadow-lg font-semibold flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            Previous
+        </button>
+        <button id="nextBtn" onclick="nextSlide()" class="nav-btn bg-brand hover:bg-brand-dark text-white px-6 py-3 rounded-lg shadow-lg font-semibold flex items-center gap-2">
+            Next
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </button>
+    </div>
+    
+    <!-- Slide Counter -->
+    <div class="fixed top-8 right-8 z-50 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg shadow-md">
+        <span class="text-gray-700 font-semibold"><span id="currentSlide">1</span> / <span id="totalSlides">13</span></span>
+    </div>
+
+    <!-- SLIDE 1: Title Slide -->
+    <div class="slide active">
+        <div class="w-full flex flex-col items-center justify-center bg-gradient-to-br from-brand via-orange-500 to-brand-dark text-white px-8">
+            <div class="text-center max-w-4xl">
+                <div class="mb-8">
+                    <img src="../src/com/logidoo/services/LogidoLogo.png" alt="FleetFlux Logo" class="h-32 mx-auto mb-8 bg-white/20 p-4 rounded-full backdrop-blur-sm">
+                </div>
+                <h1 class="text-6xl font-bold mb-6 drop-shadow-lg">FleetFlux</h1>
+                <h2 class="text-3xl font-semibold mb-4 opacity-90">Advanced Fleet Management System</h2>
+                <div class="h-1 w-32 bg-white mx-auto mb-8"></div>
+                <p class="text-xl mb-2 opacity-80">Object-Oriented Programming Final Project</p>
+                <p class="text-lg opacity-70 mt-8">Cheikh Ahmadou Bamba SAMB</p>
+                <p class="text-lg opacity-70">Object ORIENTED PROGRAMMING — 18/12/2025</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: Plan / Outline -->
+    <div class="slide">
+        <div class="w-full flex items-center justify-center px-16 py-12">
+            <div class="max-w-4xl w-full">
+                <h1 class="text-5xl font-bold text-gray-800 mb-8 flex items-center gap-4">
+                    <span class="bg-brand text-white px-4 py-2 rounded-lg">Plan</span>
+                    Presentation Outline
+                </h1>
+
+                <div class="bg-white rounded-xl shadow-lg p-8 mb-6">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Today's Flow</h2>
+                    <ul class="list-disc list-inside space-y-3 text-lg text-gray-700">
+                        <li>Problem statement and motivation</li>
+                        <li>Solution overview and architecture</li>
+                        <li>Key OOP concepts demonstrated</li>
+                        <li>Design patterns</li>
+                        <li>Live demo</li>
+                        <li>Summary and Q&amp;A</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: Problem Statement -->
+    <div class="slide">
+        <div class="w-full flex items-center justify-center px-16 py-12">
+            <div class="max-w-5xl w-full">
+                <h1 class="text-5xl font-bold text-gray-800 mb-8 flex items-center gap-4">
+                    <span class="bg-brand text-white px-4 py-2 rounded-lg">1</span>
+                    Problem Statement
+                </h1>
+                
+                <div class="bg-red-50 border-l-4 border-red-500 p-6 mb-6 rounded-r-lg">
+                    <h2 class="text-2xl font-bold text-red-800 mb-4">Without This System:</h2>
+                    <ul class="space-y-3 text-lg text-gray-700">
+                        <li class="flex items-start gap-3">
+                            <span class="text-red-500 text-2xl">✗</span>
+                            <span>Wrong driver-vehicle assignments (safety risk)</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-red-500 text-2xl">✗</span>
+                            <span>Logidoo is a logistics enterprise with 500+ trucks and vans and over 300 drivers — managing this in spreadsheets is difficult and error-prone, and sometimes drivers are assigned to vehicles that are not healthy.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-red-500 text-2xl">✗</span>
+                            <span>No validation of vehicle health before trips</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-green-50 border-l-4 border-green-500 p-6 rounded-r-lg">
+                    <h2 class="text-2xl font-bold text-green-800 mb-4">Impact:</h2>
+                    <p class="text-lg text-gray-700">Prevents accidents, ensures fleet safety, manages resources efficiently</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 3: Solution Overview -->
+    <div class="slide">
+        <div class="w-full flex items-center justify-center px-16 py-12">
+            <div class="max-w-5xl w-full">
+                <h1 class="text-5xl font-bold text-gray-800 mb-8 flex items-center gap-4">
+                    <span class="bg-brand text-white px-4 py-2 rounded-lg">2</span>
+                    Solution Overview
+                </h1>
+                
+                <div class="bg-white rounded-xl shadow-lg p-8 mb-6">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">System Purpose</h2>
+                    <p class="text-xl text-gray-600 mb-6">Filter that validates driver-vehicle compatibility before trip assignment</p>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="feature-card bg-white rounded-xl shadow-lg p-6 border-l-4 border-brand">
+                        <div class="text-3xl mb-3">✅</div>
+                        <h3 class="font-bold text-lg mb-2">License Validation</h3>
+                        <p class="text-gray-600">Type compatibility checks</p>
+                    </div>
+                    <div class="feature-card bg-white rounded-xl shadow-lg p-6 border-l-4 border-brand">
+                        <div class="text-3xl mb-3">🔍</div>
+                        <h3 class="font-bold text-lg mb-2">Health Checks</h3>
+                        <p class="text-gray-600">Vehicle condition validation</p>
+                    </div>
+                    <div class="feature-card bg-white rounded-xl shadow-lg p-6 border-l-4 border-brand">
+                        <div class="text-3xl mb-3">📍</div>
+                        <h3 class="font-bold text-lg mb-2">Real-Time Tracking</h3>
+                        <p class="text-gray-600">GPS monitoring</p>
+                    </div>
+                    <div class="feature-card bg-white rounded-xl shadow-lg p-6 border-l-4 border-brand">
+                        <div class="text-3xl mb-3">🤖</div>
+                        <h3 class="font-bold text-lg mb-2">Predictive Maintenance</h3>
+                        <p class="text-gray-600">AI-assisted scheduling</p>
+                    </div>
+                </div>
+                
+                <div class="mt-6 bg-gray-100 rounded-lg p-4">
+                    <p class="text-gray-700"><strong>Users:</strong> Fleet managers, dispatchers</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 4: System Architecture -->
+    <div class="slide">
+        <div class="w-full flex items-center justify-center px-16 py-12">
+            <div class="max-w-5xl w-full">
+                <h1 class="text-5xl font-bold text-gray-800 mb-8 flex items-center gap-4">
+                    <span class="bg-brand text-white px-4 py-2 rounded-lg">3</span>
+                    System Architecture
+                </h1>
+                
+                <div class="space-y-4">
+                    <div class="architecture-box bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl shadow-lg p-6">
+                        <h2 class="text-2xl font-bold mb-2">UI Layer</h2>
+                        <p class="text-blue-100">Dashboard, Login Screen</p>
+                    </div>
+                    
+                    <div class="flex justify-center text-3xl text-gray-400">↓</div>
+                    
+                    <div class="architecture-box bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-xl shadow-lg p-6">
+                        <h2 class="text-2xl font-bold mb-2">Service Layer</h2>
+                        <p class="text-purple-100">FleetManager - Business Rules</p>
+                    </div>
+                    
+                    <div class="flex justify-center text-3xl text-gray-400">↓</div>
+                    
+                    <div class="architecture-box bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl shadow-lg p-6">
+                        <h2 class="text-2xl font-bold mb-2">DAO Layer</h2>
+                        <p class="text-green-100">Database Access (VehicleDAO, DriverDAO)</p>
+                    </div>
+                    
+                    <div class="flex justify-center text-3xl text-gray-400">↓</div>
+                    
+                    <div class="architecture-box bg-gradient-to-r from-yellow-500 to-yellow-600 text-white rounded-xl shadow-lg p-6">
+                        <h2 class="text-2xl font-bold mb-2">Model Layer</h2>
+                        <p class="text-yellow-100">Vehicle, Driver (Entity Classes)</p>
+                    </div>
+                    
+                    <div class="flex justify-center text-3xl text-gray-400">↓</div>
+                    
+                    <div class="architecture-box bg-gradient-to-r from-gray-500 to-gray-600 text-white rounded-xl shadow-lg p-6">
+                        <h2 class="text-2xl font-bold mb-2">Config Layer</h2>
+                        <p class="text-gray-100">DBConnection (Singleton)</p>
+                    </div>
+                </div>
+                
+                <div class="mt-8 bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Why This Structure?</h3>
+                    <ul class="space-y-2 text-gray-700">
+                        <li>✓ Separation of concerns</li>
+                        <li>✓ Easy to maintain and test</li>
+                        <li>✓ Professional standard</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 5: Abstraction & Inheritance -->
+    <div class="slide">
+        <div class="w-full flex items-center justify-center px-16 py-12">
+            <div class="max-w-6xl w-full">
+                <h1 class="text-5xl font-bold text-gray-800 mb-4 flex items-center gap-4">
+                    <span class="bg-brand text-white px-4 py-2 rounded-lg">4</span>
+                    OOP: Abstraction & Inheritance
+                </h1>
+                
+                <div class="grid grid-cols-2 gap-6">
+                    <div>
+                        <div class="code-block text-white p-6 rounded-lg mb-4">
+                            <div class="text-green-400 font-semibold mb-3">Vehicle.java (Abstract)</div>
+                            <pre class="text-sm"><code><span class="text-purple-400">public abstract class</span> <span class="text-blue-400">Vehicle</span> {
+    <span class="text-purple-400">private</span> <span class="text-yellow-400">String</span> licensePlate;
+    <span class="text-purple-400">private</span> <span class="text-yellow-400">double</span> mileage;
+    
+    <span class="text-purple-400">public abstract</span> <span class="text-yellow-400">double</span> 
+        calculateFuelConsumption();
+    
+    <span class="text-purple-400">public abstract</span> <span class="text-yellow-400">boolean</span> 
+        isHealthy();
+    
+    <span class="text-purple-400">public abstract</span> <span class="text-yellow-400">String</span> 
+        getRequiredLicenseType();
+}</code></pre>
+                        </div>
+                        
+                        <div class="code-block text-white p-6 rounded-lg">
+                            <div class="text-green-400 font-semibold mb-3">Truck.java</div>
+                            <pre class="text-sm"><code><span class="text-purple-400">public class</span> <span class="text-blue-400">Truck</span> 
+    <span class="text-purple-400">extends</span> <span class="text-blue-400">Vehicle</span> {
+    
+    <span class="text-purple-400">@Override</span>
+    <span class="text-purple-400">public</span> <span class="text-yellow-400">double</span> 
+        calculateFuelConsumption() {
+        <span class="text-purple-400">return</span> <span class="text-orange-400">0.15</span>;
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Key Points</h2>
+                        <ul class="space-y-4 text-gray-700">
+                            <li class="flex items-start gap-3">
+                                <span class="text-brand text-2xl">•</span>
+                                <div>
+                                    <strong>Vehicle</strong> is abstract - defines common interface
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-brand text-2xl">•</span>
+                                <div>
+                                    <strong>Truck</strong> and <strong>Van</strong> extend Vehicle
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-brand text-2xl">•</span>
+                                <div>
+                                    Abstract methods must be implemented by subclasses
+                                </div>
+                            </li>
+                        </ul>
+                        
+                        <div class="mt-6 bg-brand/10 border-l-4 border-brand p-4 rounded">
+                            <p class="text-gray-700"><strong>Why:</strong> Ensures all vehicles behave consistently, but each type has unique rules</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 6: Encapsulation -->
+    <div class="slide">
+        <div class="w-full flex items-center justify-center px-16 py-12">
+            <div class="max-w-6xl w-full">
+                <h1 class="text-5xl font-bold text-gray-800 mb-4 flex items-center gap-4">
+                    <span class="bg-brand text-white px-4 py-2 rounded-lg">5</span>
+                    OOP: Encapsulation
+                </h1>
+                
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="code-block text-white p-6 rounded-lg">
+                        <div class="text-green-400 font-semibold mb-3">Vehicle.java</div>
+                        <pre class="text-sm"><code><span class="text-purple-400">public abstract class</span> <span class="text-blue-400">Vehicle</span> {
+    <span class="text-gray-500">// Private fields - hidden from outside</span>
+    <span class="text-purple-400">private</span> <span class="text-yellow-400">double</span> mileage;
+    <span class="text-purple-400">private</span> <span class="text-yellow-400">double</span> fuelLevel;
+    
+    <span class="text-gray-500">// Controlled access via getters</span>
+    <span class="text-purple-400">public</span> <span class="text-yellow-400">double</span> getMileage() {
+        <span class="text-purple-400">return</span> mileage;
+    }
+    
+    <span class="text-gray-500">// Validation in setters</span>
+    <span class="text-purple-400">public</span> <span class="text-yellow-400">void</span> 
+        setMileage(<span class="text-yellow-400">double</span> mileage) {
+        <span class="text-purple-400">if</span> (mileage >= <span class="text-orange-400">0</span>) {
+            <span class="text-purple-400">this</span>.mileage = mileage;
+        }
+    }
+}</code></pre>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Key Points</h2>
+                        <ul class="space-y-4 text-gray-700 mb-6">
+                            <li class="flex items-start gap-3">
+                                <span class="text-brand text-2xl">🔒</span>
+                                <div>
+                                    <strong>All fields are private</strong> - cannot be accessed directly
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-brand text-2xl">🔑</span>
+                                <div>
+                                    <strong>Access through controlled methods</strong> (getters/setters)
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-brand text-2xl">✓</span>
+                                <div>
+                                    <strong>Validation in setters</strong> (mileage >= 0, fuel 0-100%)
+                                </div>
+                            </li>
+                        </ul>
+                        
+                        <div class="bg-brand/10 border-l-4 border-brand p-4 rounded">
+                            <p class="text-gray-700"><strong>Why:</strong> Data protection, prevents invalid values, controlled access</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 7: Polymorphism -->
+    <div class="slide">
+        <div class="w-full flex items-center justify-center px-16 py-12">
+            <div class="max-w-6xl w-full">
+                <h1 class="text-5xl font-bold text-gray-800 mb-4 flex items-center gap-4">
+                    <span class="bg-brand text-white px-4 py-2 rounded-lg">6</span>
+                    OOP: Polymorphism
+                </h1>
+                
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="code-block text-white p-6 rounded-lg">
+                        <div class="text-green-400 font-semibold mb-3">Example Usage</div>
+                        <pre class="text-sm"><code><span class="text-gray-500">// List can hold different types</span>
+<span class="text-purple-400">List</span>&lt;<span class="text-blue-400">Vehicle</span>&gt; vehicles = 
+    <span class="text-purple-400">new</span> <span class="text-blue-400">ArrayList</span>&lt;&gt;();
+
+vehicles.add(<span class="text-purple-400">new</span> <span class="text-blue-400">Truck</span>(...));
+vehicles.add(<span class="text-purple-400">new</span> <span class="text-blue-400">Van</span>(...));
+
+<span class="text-gray-500">// Same method call, different behavior</span>
+<span class="text-purple-400">for</span> (<span class="text-blue-400">Vehicle</span> v : vehicles) {
+    v.isHealthy(); <span class="text-gray-500">// Calls Truck or Van version</span>
+}</code></pre>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Key Points</h2>
+                        <ul class="space-y-4 text-gray-700 mb-6">
+                            <li class="flex items-start gap-3">
+                                <span class="text-brand text-2xl">🔄</span>
+                                <div>
+                                    <strong>Same interface</strong>, different implementations
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-brand text-2xl">🎯</span>
+                                <div>
+                                    <strong>vehicle.isHealthy()</strong> calls Truck or Van version automatically
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-brand text-2xl">➕</span>
+                                <div>
+                                    <strong>Works with any Vehicle subclass</strong>
+                                </div>
+                            </li>
+                        </ul>
+                        
+                        <div class="bg-brand/10 border-l-4 border-brand p-4 rounded">
+                            <p class="text-gray-700"><strong>Why:</strong> Flexible code, easy to add new vehicle types without changing existing code</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 8: Design Patterns - Singleton & DAO -->
+    <div class="slide">
+        <div class="w-full flex items-center justify-center px-16 py-12">
+            <div class="max-w-6xl w-full">
+                <h1 class="text-5xl font-bold text-gray-800 mb-8 flex items-center gap-4">
+                    <span class="bg-brand text-white px-4 py-2 rounded-lg">7</span>
+                    Design Patterns: Singleton & DAO
+                </h1>
+                
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-xl shadow-lg p-6">
+                        <h2 class="text-2xl font-bold mb-4">Singleton Pattern</h2>
+                        <p class="text-purple-100 mb-4"><strong>DBConnection.java</strong></p>
+                        <div class="code-block text-white p-4 rounded-lg mb-4">
+                            <pre class="text-xs"><code><span class="text-purple-400">private static</span> DBConnection instance;
+
+<span class="text-purple-400">public static</span> Connection getConnection() {
+    <span class="text-purple-400">if</span> (instance == <span class="text-purple-400">null</span>) {
+        instance = <span class="text-purple-400">new</span> DBConnection();
+    }
+    <span class="text-purple-400">return</span> instance.connection;
+}</code></pre>
+                        </div>
+                        <p class="text-purple-100">✓ Single database connection instance</p>
+                        <p class="text-purple-200 text-sm mt-2">Why: Resource efficiency</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-green-500 to-green-600 text-white rounded-xl shadow-lg p-6">
+                        <h2 class="text-2xl font-bold mb-4">DAO Pattern</h2>
+                        <p class="text-green-100 mb-4"><strong>VehicleDAO.java, DriverDAO.java</strong></p>
+                        <div class="bg-black/30 p-4 rounded-lg mb-4">
+                            <ul class="space-y-2 text-sm text-green-100">
+                                <li>• addVehicle(vehicle)</li>
+                                <li>• getAllVehicles()</li>
+                                <li>• findVehicleByLicensePlate()</li>
+                                <li>• updateVehicleStatus()</li>
+                            </ul>
+                        </div>
+                        <p class="text-green-100">✓ Separates database code from business logic</p>
+                        <p class="text-green-200 text-sm mt-2">Why: Easy to change database, testable code</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 9: Observer Pattern -->
+    <div class="slide">
+        <div class="w-full flex items-center justify-center px-16 py-12">
+            <div class="max-w-6xl w-full">
+                <h1 class="text-5xl font-bold text-gray-800 mb-8 flex items-center gap-4">
+                    <span class="bg-brand text-white px-4 py-2 rounded-lg">8</span>
+                    Design Pattern: Observer
+                </h1>
+                
+                <div class="grid grid-cols-3 gap-6 mb-6">
+                    <div class="bg-blue-500 text-white rounded-xl shadow-lg p-6 text-center">
+                        <div class="text-4xl mb-3">📋</div>
+                        <h3 class="text-xl font-bold mb-2">Subject</h3>
+                        <p class="text-sm">MaintenanceTicket</p>
+                    </div>
+                    
+                    <div class="flex items-center justify-center">
+                        <div class="text-4xl text-gray-400">→</div>
+                    </div>
+                    
+                    <div class="bg-green-500 text-white rounded-xl shadow-lg p-6 text-center">
+                        <div class="text-4xl mb-3">👁️</div>
+                        <h3 class="text-xl font-bold mb-2">Observer</h3>
+                        <p class="text-sm">InventoryModule</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-lg p-6 mb-4">
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">How It Works:</h3>
+                    <div class="space-y-3 text-gray-700">
+                        <div class="flex items-start gap-3">
+                            <span class="bg-brand text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">1</span>
+                            <p>Maintenance ticket is created</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="bg-brand text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">2</span>
+                            <p>Ticket notifies all observers automatically</p>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="bg-brand text-white rounded-full w-8 h-8 flex items-center justify-center font-bold">3</span>
+                            <p>InventoryModule deducts parts from stock</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-brand/10 border-l-4 border-brand p-4 rounded-lg">
+                    <p class="text-gray-700"><strong>Why:</strong> Automatic workflows, loose coupling, extensible</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 10: Key Features -->
+    <div class="slide">
+        <div class="w-full flex items-center justify-center px-16 py-12">
+            <div class="max-w-6xl w-full">
+                <h1 class="text-5xl font-bold text-gray-800 mb-8 flex items-center gap-4">
+                    <span class="bg-brand text-white px-4 py-2 rounded-lg">9</span>
+                    Key Features & Business Rules
+                </h1>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-blue-500">
+                        <div class="text-3xl mb-3">🚗</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">License Validation</h3>
+                        <p class="text-gray-600">Heavy > Medium > Light (hierarchical)</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-green-500">
+                        <div class="text-3xl mb-3">🔧</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Vehicle Health</h3>
+                        <p class="text-gray-600">Mileage and fuel checks (different per type)</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-yellow-500">
+                        <div class="text-3xl mb-3">⏰</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Fatigue Management</h3>
+                        <p class="text-gray-600">8-hour driving limit per driver</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-purple-500">
+                        <div class="text-3xl mb-3">🤖</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Predictive Maintenance</h3>
+                        <p class="text-gray-600">AI-assisted failure prediction</p>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl shadow-lg p-6 border-t-4 border-red-500 col-span-2">
+                        <div class="text-3xl mb-3">📍</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Real-Time Tracking</h3>
+                        <p class="text-gray-600">GPS coordinates displayed on interactive map</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 11: Technology Stack -->
+    <div class="slide">
+        <div class="w-full flex items-center justify-center px-16 py-12">
+            <div class="max-w-5xl w-full">
+                <h1 class="text-5xl font-bold text-gray-800 mb-8 flex items-center gap-4">
+                    <span class="bg-brand text-white px-4 py-2 rounded-lg">10</span>
+                    Technology Stack
+                </h1>
+                
+                <div class="grid grid-cols-3 gap-4 mb-6">
+                    <div class="bg-gradient-to-br from-orange-400 to-orange-600 text-white rounded-xl shadow-lg p-6 text-center">
+                        <div class="text-4xl mb-3">☕</div>
+                        <h3 class="text-xl font-bold">Java 17</h3>
+                        <p class="text-sm text-orange-100">Programming Language</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-blue-400 to-blue-600 text-white rounded-xl shadow-lg p-6 text-center">
+                        <div class="text-4xl mb-3">🗄️</div>
+                        <h3 class="text-xl font-bold">MySQL</h3>
+                        <p class="text-sm text-blue-100">Database</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-green-400 to-green-600 text-white rounded-xl shadow-lg p-6 text-center">
+                        <div class="text-4xl mb-3">🖥️</div>
+                        <h3 class="text-xl font-bold">Java Swing</h3>
+                        <p class="text-sm text-green-100">User Interface</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-lg p-6 mb-4">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Libraries</h3>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="text-center p-4 bg-gray-50 rounded-lg">
+                            <p class="font-semibold text-gray-800">FlatLaf</p>
+                            <p class="text-sm text-gray-600">Modern UI</p>
+                        </div>
+                        <div class="text-center p-4 bg-gray-50 rounded-lg">
+                            <p class="font-semibold text-gray-800">JXMapViewer</p>
+                            <p class="text-sm text-gray-600">Maps</p>
+                        </div>
+                        <div class="text-center p-4 bg-gray-50 rounded-lg">
+                            <p class="font-semibold text-gray-800">MigLayout</p>
+                            <p class="text-sm text-gray-600">Layout Manager</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-brand/10 border-l-4 border-brand p-4 rounded-lg">
+                    <p class="text-gray-700"><strong>Design Patterns:</strong> Singleton, DAO, Observer</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 12: AI Usage Disclosure -->
+    <div class="slide">
+        <div class="w-full flex items-center justify-center px-16 py-12">
+            <div class="max-w-5xl w-full">
+                <h1 class="text-5xl font-bold text-gray-800 mb-8 flex items-center gap-4">
+                    <span class="bg-brand text-white px-4 py-2 rounded-lg">11</span>
+                    AI Usage Disclosure
+                </h1>
+                
+                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 rounded-r-lg p-6 mb-6">
+                    <h2 class="text-2xl font-bold text-blue-800 mb-4">How I used AI</h2>
+                    <ul class="space-y-4 text-gray-700">
+                        <li class="flex items-start gap-3">
+                            <span class="text-blue-500 text-2xl">🛠️</span>
+                            <div>
+                                <strong>UI debugging:</strong> I used AI tools to find and fix tricky UI layout and interaction bugs (timing, layout shifts, responsive issues).
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-blue-500 text-2xl">🧭</span>
+                            <div>
+                                <strong>Code organization:</strong> AI suggested refactorings and architecture improvements (separation of concerns, clearer module boundaries).
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-blue-500 text-2xl">💡</span>
+                            <div>
+                                <strong>Assistance on difficult code:</strong> For complex or unfamiliar areas I asked AI for explanations and sample refactorings — I reviewed and adapted the suggestions myself.
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="mt-4 text-sm text-gray-600">Note: AI assisted; final design and code decisions were made by me.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 13: Live Demo -->
+    <div class="slide">
+        <div class="w-full flex items-center justify-center px-16 py-12 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+            <div class="max-w-6xl w-full">
+                <h1 class="text-5xl font-bold mb-8 flex items-center gap-4">
+                    <span class="bg-brand text-white px-4 py-2 rounded-lg">12</span>
+                    Live Demo
+                </h1>
+                
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl shadow-lg p-16 mb-6 text-center">
+                    <h2 class="text-3xl font-bold mb-4">Live Demo</h2>
+                    <p class="text-gray-200 text-xl">I'll now show a short live demo of the system.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 14: Conclusion -->
+    <div class="slide">
+        <div class="w-full flex items-center justify-center px-16 py-12 bg-gradient-to-br from-brand via-orange-500 to-brand-dark text-white">
+            <div class="max-w-4xl w-full text-center">
+                <h1 class="text-6xl font-bold mb-8">Summary</h1>
+                
+                <div class="space-y-6 mb-8">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                        <p class="text-2xl">✓ Professional layered architecture</p>
+                    </div>
+                    
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                        <p class="text-2xl">✓ All OOP principles demonstrated</p>
+                    </div>
+                    
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                        <p class="text-2xl">✓ Design patterns properly implemented</p>
+                    </div>
+                    
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6">
+                        <p class="text-2xl">✓ Real-world application</p>
+                    </div>
+                </div>
+                
+                <div class="text-4xl font-bold mt-12">Thank You!</div>
+                <div class="text-2xl mt-4 opacity-90">Questions?</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            
+            // Update counter
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+            
+            // Update progress bar
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+
+            // Hide Previous on the first slide, otherwise show it
+            if (prevBtn) {
+                if (currentSlide === 0) {
+                    prevBtn.style.display = 'none';
+                } else {
+                    prevBtn.style.display = '';
+                }
+            }
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function previousSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                previousSlide();
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
+
