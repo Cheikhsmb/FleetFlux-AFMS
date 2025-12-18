@@ -213,7 +213,7 @@ The code is written to be **simple and understandable** for learning purposes.
 
 ## 👨‍💻 Author
 
-Built for OOP class project - Advanced Fleet Management System
+Built by CABS for OOP final class project - Advanced Fleet Management System
 
 ---
 
